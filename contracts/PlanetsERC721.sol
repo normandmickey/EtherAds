@@ -16,10 +16,15 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     string name;
   }
 
-  uint planetCount = 0;
-
   function PlanetsERC721() public {
-
+    mintPlanet(1, "Mercury");
+    mintPlanet(2, "Venus");
+    mintPlanet(3, "Earth");
+    mintPlanet(4, "Mars");
+    mintPlanet(5, "Jupiter");
+    mintPlanet(6, "Saturn");
+    mintPlanet(7, "Uranus");
+    mintPlanet(8, "Neptune");
   }
 
   function getName() public pure returns(string) {
@@ -30,7 +35,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     return SYMBOL;
   }
 
-  function mint(uint256 planetId, string name) payable {
+  function mintPlanet(uint256 planetId, string name) public payable {
     Planet memory _planet = Planet({
       name: name
     });

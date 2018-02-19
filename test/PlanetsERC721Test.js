@@ -21,4 +21,10 @@ contract('PlanetsERC721', accounts => {
     const actualOwner = await planets.owner()
     assert.equal(actualOwner, owner)
   })
+
+  it('has planets', async function () {
+    const planetCount = await planets.balanceOf(owner)
+    assert.equal(planetCount, 8)
+  })
+
 })
