@@ -13,7 +13,7 @@ App = {
       web3 = new Web3(web3.currentProvider);
     } else {
       // set the provider you want from Web3.providers
-      App.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:9545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://127.0.0.1:8545');
       web3 = new Web3(App.web3Provider);
     }
 
@@ -29,7 +29,7 @@ App = {
       // Set the provider for our contract.
       App.contracts.PlanetsERC721.setProvider(App.web3Provider);
 
-      return App.getBalances();
+      return App.getPlanets();
     });
 
     return App.bindEvents();
@@ -38,6 +38,38 @@ App = {
   bindEvents: function() {
     //$(document).on('click', '#transferButton', App.handleTransfer);
   },
+
+  getPlanets: function() {
+    var planetsContractInstance;
+
+    web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+
+      var account = accounts[0];
+      App.contracts.PlanetsERC721.deployed().then(function(instance) {
+        planetsContractInstance = instance;
+        let planets = [1,2,3,4,5,6,7,8];
+        planets.forEach(function(p) {
+          return planetsContractInstance.getPlanet(p).then((result) => {
+            App.addPlanetSection(result);
+          })
+        })
+      })
+    })
+  },
+
+  addPlanetSection: function(planetInfo) {
+    let mainElement = document.createElement('div')
+    let textElement = document.createElement('p')
+    mainElement.setAttribute('style', 'display:inline-block;')
+    let element = document.createElement('div')
+    textElement.innerText = planetInfo;
+    mainElement.appendChild(element)
+    mainElement.appendChild(textElement)
+    document.querySelector('#planet-container').appendChild(mainElement)
+  }
 
 };
 
