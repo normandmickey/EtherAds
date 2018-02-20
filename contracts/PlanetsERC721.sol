@@ -45,14 +45,21 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   }
 
   function buyPlanet(uint planetId) public payable onlyMintedTokens(planetId) {
+    //require enough ether
     uint256 askingPrice = getAskingPrice(planetId);
     require(msg.value >= askingPrice);
+
+    //transfer planet ownership
     address previousOwner = ownerOf(planetId);
     clearApprovalAndTransfer(previousOwner, msg.sender, planetId);
-    tokenToPriceMap[planetId] = askingPrice;
-    //TODO: take dev cut
 
-    //TODO: send ether to previous owner
+    //update price
+    tokenToPriceMap[planetId] = askingPrice;
+
+    //TODO: take dev cut
+    
+
+    //send ether to previous owner
     previousOwner.transfer(msg.value);
   }
 
