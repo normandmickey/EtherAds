@@ -7,7 +7,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   string constant public NAME = "PLANETS";
   string constant public SYMBOL = "P";
 
-  uint constant public PRICE = 0.01 ether;
+  uint constant public PRICE = 0.005 ether;
 
   mapping(uint256 => uint256) tokenToPriceMap;
   Planet[] planets;
@@ -47,12 +47,13 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   function buyPlanet(uint planetId) public payable onlyMintedTokens(planetId) {
     uint256 askingPrice = getAskingPrice(planetId);
     require(msg.value >= askingPrice);
-    clearApprovalAndTransfer(ownerOf(planetId), msg.sender, planetId);
+    address previousOwner = ownerOf(planetId);
+    clearApprovalAndTransfer(previousOwner, msg.sender, planetId);
     tokenToPriceMap[planetId] = askingPrice;
-
-    //TODO: set first time buy price to 0.01
-    //TODO: send ether back to previous owner
     //TODO: take dev cut
+
+    //TODO: send ether to previous owner
+    previousOwner.transfer(msg.value);
   }
 
   function getCurrentPrice(uint256 planetId) public view onlyMintedTokens(planetId) returns(uint256) {

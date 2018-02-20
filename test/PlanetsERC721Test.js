@@ -4,6 +4,7 @@ const BigNumber = web3.BigNumber
 contract('PlanetsERC721', accounts => {
   var owner = accounts[0]
   var accountOne = accounts[1]
+  let startPrice = 0.005
   let planets
 
   beforeEach(async function () {
@@ -30,7 +31,7 @@ contract('PlanetsERC721', accounts => {
 
   it('gives planets a starting price of .01 ether', async function () {
     const price = await planets.getCurrentPrice(3);
-    assert.equal(price.toNumber(), web3.toWei(0.01, "ether"))
+    assert.equal(price.toNumber(), web3.toWei(startPrice, "ether"))
   })
 
   it('sets asking price for planets', async function () {
@@ -42,20 +43,28 @@ contract('PlanetsERC721', accounts => {
 
   describe('planets can be bought for asking price', () => {
     let planetId = 1;
+    let ownerBalance;
     let tx;
 
     beforeEach(async function () {
-      tx = await planets.buyPlanet(planetId, { from: accountOne, value: web3.toWei(0.02, "ether") });
+      ownerBalance = await web3.eth.getBalance(owner);
+      tx = await planets.buyPlanet(planetId, { from: accountOne, value: web3.toWei(startPrice * 2, "ether") });
     })
 
-    it('successfully buys a planet', async function () {
+    it('correctly assigns new owner', async function () {
       const owner = await planets.ownerOf(planetId);
       assert.equal(owner, accountOne);
     })
 
-    it('successfully updates price', async function () {
+    it('correctly sends ether to previous owner', async function () {
+      const newOwnerBalance = await web3.eth.getBalance(owner);
+      const currentPrice = await planets.getCurrentPrice(planetId);
+      assert.equal(newOwnerBalance.toNumber(), ownerBalance.toNumber() + currentPrice.toNumber());
+    })
+
+    it('correctly updates price', async function () {
       const price = await planets.getCurrentPrice(planetId);
-      assert.equal(web3.toWei(0.02, "ether"), price.toNumber());
+      assert.equal(web3.toWei(startPrice * 2, "ether"), price.toNumber());
     })
   })
 
@@ -63,7 +72,7 @@ contract('PlanetsERC721', accounts => {
     let planetId = 2;
 
     beforeEach(async function () {
-      await expectThrow(planets.buyPlanet(planetId, { from: accountOne, value: web3.toWei(0.01, "ether") }));
+      await expectThrow(planets.buyPlanet(planetId, { from: accountOne, value: web3.toWei(startPrice, "ether") }));
     })
 
     it('correctly rejects tx without enough funds', async function () {
@@ -73,7 +82,7 @@ contract('PlanetsERC721', accounts => {
 
     it('does not update the price after rejected buy attempt', async function () {
       const price = await planets.getCurrentPrice(planetId);
-      assert.equal(web3.toWei(0.01, "ether"), price.toNumber());
+      assert.equal(web3.toWei(startPrice, "ether"), price.toNumber());
     })
   })
 
