@@ -7,7 +7,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   string constant public NAME = "PLANETS";
   string constant public SYMBOL = "P";
 
-  uint constant public PRICE = .001 ether;
+  uint constant public PRICE = 0.01 ether;
 
   mapping(uint256 => uint256) tokenToPriceMap;
   Planet[] planets;
@@ -17,14 +17,14 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   }
 
   function PlanetsERC721() public {
-    mintPlanet(1, "Mercury");
-    mintPlanet(2, "Venus");
-    mintPlanet(3, "Earth");
-    mintPlanet(4, "Mars");
-    mintPlanet(5, "Jupiter");
-    mintPlanet(6, "Saturn");
-    mintPlanet(7, "Uranus");
-    mintPlanet(8, "Neptune");
+    _mintPlanet(1, "Mercury");
+    _mintPlanet(2, "Venus");
+    _mintPlanet(3, "Earth");
+    _mintPlanet(4, "Mars");
+    _mintPlanet(5, "Jupiter");
+    _mintPlanet(6, "Saturn");
+    _mintPlanet(7, "Uranus");
+    _mintPlanet(8, "Neptune");
   }
 
   function getName() public pure returns(string) {
@@ -35,7 +35,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     return SYMBOL;
   }
 
-  function mintPlanet(uint256 planetId, string name) public payable {
+  function _mintPlanet(uint256 planetId, string name) public payable {
     Planet memory _planet = Planet({
       name: name
     });
@@ -44,9 +44,24 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     tokenToPriceMap[planetId] = PRICE;
   }
 
+  function buyPlanet(uint planetId) public payable onlyMintedTokens(planetId) {
+    uint256 askingPrice = getAskingPrice(planetId);
+    require(msg.value >= askingPrice);
+    clearApprovalAndTransfer(ownerOf(planetId), msg.sender, planetId);
+    tokenToPriceMap[planetId] = askingPrice;
+
+    //TODO: set first time buy price to 0.01
+    //TODO: send ether back to previous owner
+    //TODO: take dev cut
+  }
+
   function getCurrentPrice(uint256 planetId) public view onlyMintedTokens(planetId) returns(uint256) {
+    return tokenToPriceMap[planetId];
+  }
+
+  function getAskingPrice(uint256 planetId) public view onlyMintedTokens(planetId) returns(uint256) {
     uint256 lastPrice = tokenToPriceMap[planetId];
-    uint256 askingPrice = (lastPrice * 50) / 100;
+    uint256 askingPrice = lastPrice * 2;
     return askingPrice;
   }
 
