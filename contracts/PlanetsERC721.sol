@@ -10,6 +10,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   uint constant public PRICE = 0.005 ether;
 
   mapping(uint256 => uint256) tokenToPriceMap;
+  mapping(uint256 => string) tokenToNameMap;
   Planet[] planets;
 
   struct Planet {
@@ -36,11 +37,8 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   }
 
   function _mintPlanet(uint256 planetId, string name) public payable {
-    Planet memory _planet = Planet({
-      name: name
-    });
-    planets.push(_planet);
     _mint(msg.sender, planetId);
+    tokenToNameMap[planetId] = name;
     tokenToPriceMap[planetId] = PRICE;
   }
 
@@ -57,7 +55,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     tokenToPriceMap[planetId] = askingPrice;
 
     //TODO: take dev cut
-    
+
 
     //send ether to previous owner
     previousOwner.transfer(msg.value);
@@ -71,6 +69,13 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     uint256 lastPrice = tokenToPriceMap[planetId];
     uint256 askingPrice = lastPrice * 2;
     return askingPrice;
+  }
+
+  function getPlanet(uint256 planetId) public view onlyMintedTokens(planetId) returns(string, address, uint256) {
+    string name = tokenToNameMap[planetId];
+    address owner = ownerOf(planetId);
+    uint256 askingPrice = getAskingPrice(planetId);
+    return (name, owner, askingPrice);
   }
 
   modifier onlyMintedTokens(uint256 planetId) {

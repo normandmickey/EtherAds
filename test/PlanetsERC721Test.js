@@ -41,6 +41,13 @@ contract('PlanetsERC721', accounts => {
     //assert.equal(askingPrice, web3.toWei(0.02, "ether"))
   })
 
+  it('fetches name, owner, and asking price', async function () {
+    const planetInfo = await planets.getPlanet(4);
+    assert.equal(planetInfo[0], "Mars")
+    assert.equal(planetInfo[1], owner);
+    assert.equal(planetInfo[2].toNumber(), web3.toWei(startPrice * 2, "ether"))
+  })
+
   describe('planets can be bought for asking price', () => {
     let planetId = 1;
     let ownerBalance;
