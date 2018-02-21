@@ -69,18 +69,27 @@ App = {
   },
 
   addPlanetSection: function(planetInfo, id) {
-    let mainElement = document.createElement('div')
-    mainElement.id = "planet-container"
-    let textElement = document.createElement('p')
-    textElement.innerText = planetInfo;
+    let mainElement = document.createElement('tr')
+    mainElement.className = "planet-row"
+    let rowElement1 = document.createElement('td')
+    rowElement1.innerText = planetInfo[0];
+    let rowElement2 = document.createElement('td')
+    rowElement2.innerText = planetInfo[1];
+    let rowElement3 = document.createElement('td')
+    rowElement3.innerText = `${web3.fromWei(planetInfo[2], "ether")} ETH`;
+    let rowElement4 = document.createElement('td')
     let buyPlanetButton = document.createElement("BUTTON")
+    buyPlanetButton.innerText = `Buy ${planetInfo[0]}`
     buyPlanetButton.class = "buyPlanetButton"
     buyPlanetButton.addEventListener('click', function() {
       App.buyPlanet(id, planetInfo[2])
     })
-    mainElement.appendChild(textElement)
-    mainElement.appendChild(buyPlanetButton)
-    document.querySelector('#planets-container').appendChild(mainElement)
+    rowElement4.appendChild(buyPlanetButton)
+    mainElement.appendChild(rowElement1)
+    mainElement.appendChild(rowElement2)
+    mainElement.appendChild(rowElement3)
+    mainElement.appendChild(rowElement4)
+    document.querySelector('#planets-table').appendChild(mainElement)
   },
 
 };
