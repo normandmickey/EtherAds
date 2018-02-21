@@ -51,25 +51,37 @@ App = {
       App.contracts.PlanetsERC721.deployed().then(function(instance) {
         planetsContractInstance = instance;
         let planets = [1,2,3,4,5,6,7,8];
-        planets.forEach(function(p) {
-          return planetsContractInstance.getPlanet(p).then((result) => {
-            App.addPlanetSection(result);
+        planets.forEach(function(id) {
+          return planetsContractInstance.getPlanet(id).then((result) => {
+            App.addPlanetSection(result, id);
           })
         })
-      })
+      }).catch(function(err) {
+        console.log(err.message);
+      });
     })
   },
 
-  addPlanetSection: function(planetInfo) {
+  buyPlanet: function(planetId, price) {
+    App.contracts.PlanetsERC721.deployed().then(function(instance) {
+      instance.buyPlanet(planetId, { value: price} )
+    })
+  },
+
+  addPlanetSection: function(planetInfo, id) {
     let mainElement = document.createElement('div')
+    mainElement.id = "planet-container"
     let textElement = document.createElement('p')
-    mainElement.setAttribute('style', 'display:inline-block;')
-    let element = document.createElement('div')
     textElement.innerText = planetInfo;
-    mainElement.appendChild(element)
+    let buyPlanetButton = document.createElement("BUTTON")
+    buyPlanetButton.class = "buyPlanetButton"
+    buyPlanetButton.addEventListener('click', function() {
+      App.buyPlanet(id, planetInfo[2])
+    })
     mainElement.appendChild(textElement)
-    document.querySelector('#planet-container').appendChild(mainElement)
-  }
+    mainElement.appendChild(buyPlanetButton)
+    document.querySelector('#planets-container').appendChild(mainElement)
+  },
 
 };
 
