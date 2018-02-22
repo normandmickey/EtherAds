@@ -87,7 +87,11 @@ contract('PlanetsERC721', accounts => {
     const askingPrice8 = await planets.getAskingPrice(1)
     const tx8 = await planets.buyPlanet(1, { from: owner, value: askingPrice8 });
     assert.equal(askingPrice8, web3.toWei(0.643125, "ether"))
+  })
 
+  it('can mint new objects', async function () {
+    const newId = await planets.getObjectCount();
+    const tx = await planets.mintObject(newId + 1, "Starman", { from: owner });
   })
 
   describe('planets can be bought for asking price', () => {

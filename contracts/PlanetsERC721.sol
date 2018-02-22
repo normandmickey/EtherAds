@@ -6,8 +6,8 @@ import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 contract PlanetsERC721 is ERC721Token, Ownable {
   string constant public NAME = "PLANETS";
   string constant public SYMBOL = "P";
-
-  uint constant public PRICE = 0.005 ether;
+  uint256 constant public PRICE = 0.005 ether;
+  uint256 public objectCount = 8;
 
   mapping(uint256 => uint256) tokenToPriceMap;
   mapping(uint256 => string) tokenToNameMap;
@@ -18,14 +18,14 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   }
 
   function PlanetsERC721() public {
-    _mintPlanet(1, "Mercury");
-    _mintPlanet(2, "Venus");
-    _mintPlanet(3, "Earth");
-    _mintPlanet(4, "Mars");
-    _mintPlanet(5, "Jupiter");
-    _mintPlanet(6, "Saturn");
-    _mintPlanet(7, "Uranus");
-    _mintPlanet(8, "Neptune");
+    mintObject(1, "Mercury");
+    mintObject(2, "Venus");
+    mintObject(3, "Earth");
+    mintObject(4, "Mars");
+    mintObject(5, "Jupiter");
+    mintObject(6, "Saturn");
+    mintObject(7, "Uranus");
+    mintObject(8, "Neptune");
   }
 
   function getName() public pure returns(string) {
@@ -36,7 +36,11 @@ contract PlanetsERC721 is ERC721Token, Ownable {
     return SYMBOL;
   }
 
-  function _mintPlanet(uint256 planetId, string name) public payable {
+  function getObjectCount() public view returns (uint256) {
+    return objectCount;
+  }
+
+  function mintObject(uint256 planetId, string name) public payable onlyOwner() {
     _mint(msg.sender, planetId);
     tokenToNameMap[planetId] = name;
     tokenToPriceMap[planetId] = PRICE;
