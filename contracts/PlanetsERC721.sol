@@ -7,7 +7,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
   string constant public NAME = "PLANETS";
   string constant public SYMBOL = "P";
   uint256 constant public PRICE = 0.005 ether;
-  uint256 public objectCount = 8;
+  uint256 public objectCount = 0;
 
   mapping(uint256 => uint256) tokenToPriceMap;
   mapping(uint256 => string) tokenToNameMap;
@@ -42,6 +42,7 @@ contract PlanetsERC721 is ERC721Token, Ownable {
 
   function mintObject(uint256 planetId, string name) public payable onlyOwner() {
     _mint(msg.sender, planetId);
+    objectCount++;
     tokenToNameMap[planetId] = name;
     tokenToPriceMap[planetId] = PRICE;
   }

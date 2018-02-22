@@ -39,27 +39,16 @@ App = {
     //$(document).on('click', '#transferButton', App.handleTransfer);
   },
 
-  getPlanets: function() {
-    var planetsContractInstance;
-
-    web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
-
-      var account = accounts[0];
-      App.contracts.PlanetsERC721.deployed().then(function(instance) {
-        planetsContractInstance = instance;
-        let planets = [1,2,3,4,5,6,7,8];
-        planets.forEach(function(id) {
-          return planetsContractInstance.getPlanet(id).then((result) => {
-            App.addPlanetSection(result, id);
-          })
-        })
-      }).catch(function(err) {
-        console.log(err.message);
-      });
-    })
+  getPlanets: async function() {
+    let planetsContractInstance = await App.contracts.PlanetsERC721.deployed()
+    let objectCount = await planetsContractInstance.getObjectCount()
+    console.log(objectCount.toNumber())
+    for (let id = 1; id <= objectCount; id++) {
+      console.log(id)
+      planetsContractInstance.getPlanet(id).then((result) => {
+        App.addPlanetSection(result, id);
+      })
+    }
   },
 
   buyPlanet: function(planetId, price) {
