@@ -48,6 +48,48 @@ contract('PlanetsERC721', accounts => {
     assert.equal(planetInfo[2].toNumber(), web3.toWei(startPrice * 2, "ether"))
   })
 
+  it('decreases price increase over time', async function () {
+    const askingPrice1 = await planets.getAskingPrice(1)
+    const tx1 = await planets.buyPlanet(1, { from: accountOne, value: askingPrice1 });
+    assert.equal(askingPrice1, web3.toWei(0.01, "ether"))
+
+    //0.02
+    const askingPrice2 = await planets.getAskingPrice(1)
+    const tx2 = await planets.buyPlanet(1, { from: owner, value: askingPrice2 });
+    assert.equal(askingPrice2, web3.toWei(0.02, "ether"))
+
+    //0.04
+    const askingPrice3 = await planets.getAskingPrice(1)
+    const tx3 = await planets.buyPlanet(1, { from: accountOne, value: askingPrice3 });
+    assert.equal(askingPrice3, web3.toWei(0.04, "ether"))
+
+    //0.08
+    const askingPrice4 = await planets.getAskingPrice(1)
+    const tx4 = await planets.buyPlanet(1, { from: owner, value: askingPrice4 });
+    assert.equal(askingPrice4, web3.toWei(0.08, "ether"))
+
+    //0.14
+    const askingPrice5 = await planets.getAskingPrice(1)
+    const tx5 = await planets.buyPlanet(1, { from: accountOne, value: askingPrice5 });
+    assert.equal(askingPrice5, web3.toWei(0.14, "ether"))
+
+    //0.245
+    const askingPrice6 = await planets.getAskingPrice(1)
+    const tx6 = await planets.buyPlanet(1, { from: owner, value: askingPrice6 });
+    assert.equal(askingPrice6, web3.toWei(0.245, "ether"))
+
+    //0.42875
+    const askingPrice7 = await planets.getAskingPrice(1)
+    const tx7 = await planets.buyPlanet(1, { from: accountOne, value: askingPrice7 });
+    assert.equal(askingPrice7, web3.toWei(0.42875, "ether"))
+
+    //0.643125
+    const askingPrice8 = await planets.getAskingPrice(1)
+    const tx8 = await planets.buyPlanet(1, { from: owner, value: askingPrice8 });
+    assert.equal(askingPrice8, web3.toWei(0.643125, "ether"))
+
+  })
+
   describe('planets can be bought for asking price', () => {
     let planetId = 1;
     let ownerBalance;

@@ -67,8 +67,19 @@ contract PlanetsERC721 is ERC721Token, Ownable {
 
   function getAskingPrice(uint256 planetId) public view onlyMintedTokens(planetId) returns(uint256) {
     uint256 lastPrice = tokenToPriceMap[planetId];
-    uint256 askingPrice = lastPrice * 2;
-    return askingPrice;
+    if (lastPrice <= 0.04 ether) {
+      return lastPrice * 2;
+    }
+    if (lastPrice <= 0.25 ether) {
+      return lastPrice * 175 / 100;
+    }
+    if (lastPrice <= 0.50 ether) {
+      return lastPrice * 150 / 100;
+    }
+    if (lastPrice > 0.50 ether) {
+      return lastPrice * 125 / 100;
+    }
+    return lastPrice;
   }
 
   function getPlanet(uint256 planetId) public view onlyMintedTokens(planetId) returns(string, address, uint256) {
