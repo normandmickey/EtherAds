@@ -1,5 +1,5 @@
-var PlanetsERC721 = artifacts.require("./PlanetsERC721.sol");
+var EtherAds = artifacts.require("./EtherAds.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(PlanetsERC721);
+  deployer.deploy(EtherAds);
 };
