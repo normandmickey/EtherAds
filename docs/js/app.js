@@ -67,13 +67,13 @@ App = {
     let rowElement3 = document.createElement('td')
     rowElement3.innerText = `${web3.fromWei(adInfo[2], "ether")} ETH`;
     let rowElement4 = document.createElement('td')
-    let buyADButton = document.createElement("BUTTON")
+    let buyAdButton = document.createElement("BUTTON")
     buyAdButton.innerText = `Buy ${adInfo[0]}`
     buyAdButton.class = "buyAdButton"
-    buyADButton.addEventListener('click', function() {
+    buyAdButton.addEventListener('click', function() {
       App.buyAd(id, adInfo[2])
     })
-    rowElement4.appendChild(buyAdtButton)
+    rowElement4.appendChild(buyAdButton)
     mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement2)
     mainElement.appendChild(rowElement3)
