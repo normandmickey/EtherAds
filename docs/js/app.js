@@ -61,10 +61,16 @@ App = {
     let mainElement = document.createElement('tr')
     mainElement.className = "ad-row"
     let rowElement1 = document.createElement('td')
-    rowElement1.innerText = adInfo[1];
+//    rowElement1.innerText = adInfo[1];
+    let addressButton = document.createElement("BUTTON")
+    addressButton.innerText = `Owner`
+    addressButton.class = "buyAdButton"
+    addressButton.addEventListener('click', function redirect() {
+      window.location = `https://rinkeby.etherscan.io/address/${adInfo[1]}`
+    })
     let rowElement2 = document.createElement('td')
     let visitButton = document.createElement("BUTTON")
-    visitButton.innerText = `Visit ${adInfo[3]}`
+    visitButton.innerText = `${adInfo[3]}`
     visitButton.class = "buyAdButton"
     visitButton.addEventListener('click', function() {
       window.location = adInfo[3]
@@ -73,16 +79,17 @@ App = {
     rowElement3.innerText = `${web3.fromWei(adInfo[2], "ether")} ETH`;
     let rowElement4 = document.createElement('td')
     let buyAdButton = document.createElement("BUTTON")
-    buyAdButton.innerText = `Buy ${adInfo[0]}`
+    buyAdButton.innerText = `Buy ${adInfo[0]} ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
     buyAdButton.addEventListener('click', function() {
       App.buyAd(id, adInfo[2], "http://www.etherads.co")
     })
     rowElement4.appendChild(buyAdButton)
     rowElement2.appendChild(visitButton)
+    rowElement1.appendChild(addressButton)
     mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement2)
-    mainElement.appendChild(rowElement3)
+//    mainElement.appendChild(rowElement3)
     mainElement.appendChild(rowElement4)
     document.querySelector('#ads-table').appendChild(mainElement)
   },
