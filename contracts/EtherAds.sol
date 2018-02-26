@@ -11,21 +11,24 @@ contract EtherAds is ERC721Token, Ownable {
 
   mapping(uint256 => uint256) tokenToPriceMap;
   mapping(uint256 => string) tokenToNameMap;
+  mapping(uint256 => string) tokenToUrlMap;
+
   Ad[] ads;
 
   struct Ad {
     string name;
+    string url;
   }
 
   function EtherAds() public {
-    mintObject(1, "Position #1");
-    mintObject(2, "Position #2");
-    mintObject(3, "Position #3");
-    mintObject(4, "Position #4");
-    mintObject(5, "Position #5");
-    mintObject(6, "Position #6");
-    mintObject(7, "Position #7");
-    mintObject(8, "Position #8");
+    mintObject(1, "Ad #1", "http://www.etherads.co");
+    mintObject(2, "Ad #2", "http://www.etherads.co");
+    mintObject(3, "Ad #3", "http://www.etherads.co");
+    mintObject(4, "Ad #4", "http://www.etherads.co");
+    mintObject(5, "Ad #5", "http://www.etherads.co");
+    mintObject(6, "Ad #6", "http://www.etherads.co");
+    mintObject(7, "Ad #7", "http://www.etherads.co");
+    mintObject(8, "Ad #8", "http://www.etherads.co");
   }
 
   function getName() public pure returns(string) {
@@ -40,14 +43,15 @@ contract EtherAds is ERC721Token, Ownable {
     return objectCount;
   }
 
-  function mintObject(uint256 adId, string name) public payable onlyOwner() {
+  function mintObject(uint256 adId, string name, string url) public payable onlyOwner() {
     _mint(msg.sender, adId);
     objectCount++;
     tokenToNameMap[adId] = name;
+    tokenToUrlMap[adId] = url;
     tokenToPriceMap[adId] = PRICE;
   }
 
-  function buyAd(uint adId) public payable onlyMintedTokens(adId) {
+  function buyAd(uint adId, string url) public payable onlyMintedTokens(adId) {
     //require enough ether
     uint256 askingPrice = getAskingPrice(adId);
     require(msg.value >= askingPrice);
@@ -58,6 +62,7 @@ contract EtherAds is ERC721Token, Ownable {
 
     //update price
     tokenToPriceMap[adId] = askingPrice;
+    tokenToUrlMap[adId] = (url);
 
     //TODO: take dev cut
 
@@ -87,11 +92,12 @@ contract EtherAds is ERC721Token, Ownable {
     return lastPrice;
   }
 
-  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256) {
+  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256, string) {
     string name = tokenToNameMap[adId];
     address owner = ownerOf(adId);
     uint256 askingPrice = getAskingPrice(adId);
-    return (name, owner, askingPrice);
+    string url = tokenToUrlMap[adId];
+    return (name, owner, askingPrice, url);
   }
 
   modifier onlyMintedTokens(uint256 adId) {

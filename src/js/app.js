@@ -51,9 +51,9 @@ App = {
     }
   },
 
-  buyAd: function(adId, price) {
+  buyAd: function(adId, price, url) {
     App.contracts.EtherAds.deployed().then(function(instance) {
-      instance.buyAd(adId, { value: price} )
+      instance.buyAd(adId, url, { value: price})
     })
   },
 
@@ -61,9 +61,14 @@ App = {
     let mainElement = document.createElement('tr')
     mainElement.className = "ad-row"
     let rowElement1 = document.createElement('td')
-    rowElement1.innerText = adInfo[0];
+    rowElement1.innerText = adInfo[1];
     let rowElement2 = document.createElement('td')
-    rowElement2.innerText = adInfo[1];
+    let visitButton = document.createElement("BUTTON")
+    visitButton.innerText = `Visit ${adInfo[3]}`
+    visitButton.class = "buyAdButton"
+    visitButton.addEventListener('click', function() {
+      window.location = adInfo[3]
+    })
     let rowElement3 = document.createElement('td')
     rowElement3.innerText = `${web3.fromWei(adInfo[2], "ether")} ETH`;
     let rowElement4 = document.createElement('td')
@@ -71,9 +76,10 @@ App = {
     buyAdButton.innerText = `Buy ${adInfo[0]}`
     buyAdButton.class = "buyAdButton"
     buyAdButton.addEventListener('click', function() {
-      App.buyAd(id, adInfo[2])
+      App.buyAd(id, adInfo[2], "http://www.etherads.co")
     })
     rowElement4.appendChild(buyAdButton)
+    rowElement2.appendChild(visitButton)
     mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement2)
     mainElement.appendChild(rowElement3)
