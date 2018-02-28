@@ -21,14 +21,14 @@ contract EtherAds is ERC721Token, Ownable {
   }
 
   function EtherAds() public {
-    mintObject(1, "Ad #1", "http://www.etherads.co");
-    mintObject(2, "Ad #2", "http://www.etherads.co");
-    mintObject(3, "Ad #3", "http://www.etherads.co");
-    mintObject(4, "Ad #4", "http://www.etherads.co");
-    mintObject(5, "Ad #5", "http://www.etherads.co");
-    mintObject(6, "Ad #6", "http://www.etherads.co");
-    mintObject(7, "Ad #7", "http://www.etherads.co");
-    mintObject(8, "Ad #8", "http://www.etherads.co");
+    mintObject(1, "CASINO", "http://www.etherads.co");
+    mintObject(2, "ICO", "http://www.etherads.co");
+    mintObject(3, "SEX", "http://www.etherads.co");
+    mintObject(4, "BITCOIN", "http://www.etherads.co");
+    mintObject(5, "ETHEREUM", "http://www.etherads.co");
+    mintObject(6, "AUCTION", "http://www.etherads.co");
+    mintObject(7, "WALLET", "http://www.etherads.co");
+    mintObject(8, "CRYPTO", "http://www.etherads.co");
   }
 
   function getName() public pure returns(string) {
