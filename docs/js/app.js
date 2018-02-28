@@ -88,10 +88,10 @@ App = {
     buyAdButton.addEventListener('click', function() {
       App.buyAd(id, adInfo[2], document.getElementById("newurl"+id).value)
     })
-    rowElement4.appendChild(buyAdButton)
+    rowElement3.appendChild(buyAdButton)
     rowElement2.appendChild(visitButton)
-    rowElement3.appendChild(newurlForm)
-    rowElement3.appendChild(y)
+    rowElement4.appendChild(newurlForm)
+    rowElement4.appendChild(y)
     rowElement1.appendChild(addressButton)
     mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement2)
