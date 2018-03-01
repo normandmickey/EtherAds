@@ -12,23 +12,27 @@ contract EtherAds is ERC721Token, Ownable {
   mapping(uint256 => uint256) tokenToPriceMap;
   mapping(uint256 => string) tokenToNameMap;
   mapping(uint256 => string) tokenToUrlMap;
+  mapping(uint256 => string) tokenToDescriptionMap;
+  mapping(uint256 => string) tokenToImageUrlMap;
 
   Ad[] ads;
 
   struct Ad {
     string name;
     string url;
+    string description;
+    string imageurl;
   }
 
   function EtherAds() public {
-    mintObject(1, "CASINO", "http://www.etherads.co");
-    mintObject(2, "ICO", "http://www.etherads.co");
-    mintObject(3, "SEX", "http://www.etherads.co");
-    mintObject(4, "BITCOIN", "http://www.etherads.co");
-    mintObject(5, "ETHEREUM", "http://www.etherads.co");
-    mintObject(6, "AUCTION", "http://www.etherads.co");
-    mintObject(7, "WALLET", "http://www.etherads.co");
-    mintObject(8, "CRYPTO", "http://www.etherads.co");
+    mintObject(1, "CASINO", "http://www.etherads.co", "casino", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(2, "ICO", "http://www.etherads.co", "ico", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(3, "SEX", "http://www.etherads.co", "sex", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(4, "BITCOIN", "http://www.etherads.co", "bitcoin", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(5, "ETHEREUM", "http://www.etherads.co", "ethereum", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(6, "AUCTION", "http://www.etherads.co", "auction", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(7, "WALLET", "http://www.etherads.co", "wallet", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(8, "CRYPTO", "http://www.etherads.co", "crypto", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
   }
 
   function getName() public pure returns(string) {
@@ -43,12 +47,14 @@ contract EtherAds is ERC721Token, Ownable {
     return objectCount;
   }
 
-  function mintObject(uint256 adId, string name, string url) public payable onlyOwner() {
+  function mintObject(uint256 adId, string name, string url, string description, string imageurl) public payable onlyOwner() {
     _mint(msg.sender, adId);
     objectCount++;
     tokenToNameMap[adId] = name;
     tokenToUrlMap[adId] = url;
     tokenToPriceMap[adId] = PRICE;
+    tokenToDescriptionMap[adId] = description;
+    tokenToImageUrlMap[adId] = imageurl;
   }
 
   function buyAd(uint adId, string url) public payable onlyMintedTokens(adId) {
@@ -77,27 +83,29 @@ contract EtherAds is ERC721Token, Ownable {
 
   function getAskingPrice(uint256 adId) public view onlyMintedTokens(adId) returns(uint256) {
     uint256 lastPrice = tokenToPriceMap[adId];
-    if (lastPrice <= 0.04 ether) {
+    if (lastPrice <= 0.00 ether) {
       return lastPrice * 2;
     }
-    if (lastPrice <= 0.25 ether) {
-      return lastPrice * 175 / 100;
-    }
-    if (lastPrice <= 0.50 ether) {
-      return lastPrice * 150 / 100;
-    }
-    if (lastPrice > 0.50 ether) {
-      return lastPrice * 125 / 100;
-    }
+//    if (lastPrice <= 0.25 ether) {
+//      return lastPrice * 175 / 100;
+//    }
+//    if (lastPrice <= 0.50 ether) {
+//      return lastPrice * 150 / 100;
+//    }
+//    if (lastPrice > 0.50 ether) {
+//      return lastPrice * 125 / 100;
+//    }
     return lastPrice;
   }
 
-  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256, string) {
+  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256, string, string, string) {
     string name = tokenToNameMap[adId];
     address owner = ownerOf(adId);
     uint256 askingPrice = getAskingPrice(adId);
     string url = tokenToUrlMap[adId];
-    return (name, owner, askingPrice, url);
+    string description = tokenToDescriptionMap[adId];
+    string imageurl = tokenToImageUrlMap[adId];
+    return (name, owner, askingPrice, url, description, imageurl);
   }
 
   modifier onlyMintedTokens(uint256 adId) {

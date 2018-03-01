@@ -13,7 +13,7 @@ App = {
       web3 = new Web3(web3.currentProvider);
     } else {
       // set the provider you want from Web3.providers
-      App.web3Provider = new Web3.providers.HttpProvider('http://www.ethereumauction.net:8545');
+      App.web3Provider = new Web3.providers.HttpProvider('http://ethereumauction.net:8545');
       web3 = new Web3(App.web3Provider);
     }
 
@@ -68,7 +68,7 @@ App = {
        y.setAttribute("type", "text")
        y.setAttribute("value", "newurl"+id)
        y.setAttribute("id", "newurl"+id)
-    addressButton.innerText = `Owner`
+    addressButton.innerText = `${adInfo[1]}`
     addressButton.class = "buyAdButton"
     addressButton.addEventListener('click', function redirect() {
       window.location = `https://rinkeby.etherscan.io/address/${adInfo[1]}`
@@ -83,7 +83,7 @@ App = {
     let rowElement3 = document.createElement('td')
     let rowElement4 = document.createElement('td')
     let buyAdButton = document.createElement("BUTTON")
-    buyAdButton.innerText = `Buy ${adInfo[0]} ${web3.fromWei(adInfo[2], "ether")} ETH `
+    buyAdButton.innerText = `${adInfo[0]} - ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
     buyAdButton.addEventListener('click', function() {
       App.buyAd(id, adInfo[2], document.getElementById("newurl"+id).value)

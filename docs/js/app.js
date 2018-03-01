@@ -78,7 +78,7 @@ App = {
     visitButton.innerText = `${adInfo[3]}`
     visitButton.class = "buyAdButton"
     visitButton.addEventListener('click', function() {
-      window.location = "http://" + adInfo[3]
+      window.location = adInfo[3]
     })
     let rowElement3 = document.createElement('td')
     let rowElement4 = document.createElement('td')
