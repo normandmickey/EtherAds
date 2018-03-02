@@ -65,30 +65,30 @@ App = {
       newurlForm.setAttribute("name", "newurlForm")
        y = document.createElement("INPUT")
        y.setAttribute("type", "text")
-       y.setAttribute("value", "newurl"+id)
+       y.setAttribute("value", "http\:\/\/")
        y.setAttribute("id", "newurl"+id)
     let addressButton = document.createElement("BUTTON")
-    addressButton.innerText = `${adInfo[1]}`
+    addressButton.innerText = `Owner`
     addressButton.class = "buyAdButton"
     addressButton.addEventListener('click', function redirect() {
       window.location = `https://rinkeby.etherscan.io/address/${adInfo[1]}`
     })
     let rowElement2 = document.createElement('td')
     let visitButton = document.createElement("BUTTON")
-    visitButton.innerText = `${adInfo[3]}`
+    visitButton.innerText = `${adInfo[0]}`
     visitButton.class = "buyAdButton"
     visitButton.addEventListener('click', function() {
-      window.location = adInfo[3]
+      window.open(adInfo[3], "_blank")
     })
     let rowElement3 = document.createElement('td')
     let rowElement4 = document.createElement('td')
     let rowElement5 = document.createElement('td')
     let imageurl = document.createElement("img")
         imageurl.src = adInfo[5]
-        imageurl.height = 100
-        imageurl.width = 100
+        imageurl.height = 50
+        imageurl.width = 50
     let buyAdButton = document.createElement("BUTTON")
-    buyAdButton.innerText = `${adInfo[0]} - ${web3.fromWei(adInfo[2], "ether")} ETH `
+    buyAdButton.innerText = `Buy - ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
     buyAdButton.addEventListener('click', function() {
       App.buyAd(id, adInfo[2], document.getElementById("newurl"+id).value)
@@ -101,9 +101,9 @@ App = {
     rowElement1.appendChild(addressButton)
     mainElement.appendChild(rowElement5)
     mainElement.appendChild(rowElement2)
+    mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement3)
     mainElement.appendChild(rowElement4)
-    mainElement.appendChild(rowElement1)
     document.querySelector('#ads-table').appendChild(mainElement)
   },
 
