@@ -83,18 +83,18 @@ contract EtherAds is ERC721Token, Ownable {
 
   function getAskingPrice(uint256 adId) public view onlyMintedTokens(adId) returns(uint256) {
     uint256 lastPrice = tokenToPriceMap[adId];
-    if (lastPrice <= 0.00 ether) {
+    if (lastPrice <= 0.04 ether) {
       return lastPrice * 2;
     }
-//    if (lastPrice <= 0.25 ether) {
-//      return lastPrice * 175 / 100;
-//    }
-//    if (lastPrice <= 0.50 ether) {
-//      return lastPrice * 150 / 100;
-//    }
-//    if (lastPrice > 0.50 ether) {
-//      return lastPrice * 125 / 100;
-//    }
+    if (lastPrice <= 0.25 ether) {
+      return lastPrice * 175 / 100;
+    }
+    if (lastPrice <= 0.50 ether) {
+      return lastPrice * 150 / 100;
+    }
+    if (lastPrice > 0.50 ether) {
+      return lastPrice * 125 / 100;
+    }
     return lastPrice;
   }
 
