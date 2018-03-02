@@ -51,9 +51,9 @@ App = {
     }
   },
 
-  buyAd: function(adId, price, url) {
+  buyAd: function(adId, price, url, img) {
     App.contracts.EtherAds.deployed().then(function(instance) {
-      instance.buyAd(adId, url, { value: price})
+      instance.buyAd(adId, url, img, { value: price})
     })
   },
 
@@ -61,12 +61,23 @@ App = {
     let mainElement = document.createElement('tr')
     mainElement.className = "ad-row"
     let rowElement1 = document.createElement('td')
+// new url form
+    let rowElement4 = document.createElement('td')
     let newurlForm = document.createElement("FORM")
       newurlForm.setAttribute("name", "newurlForm")
        y = document.createElement("INPUT")
        y.setAttribute("type", "text")
        y.setAttribute("value", `Include http:// or https://`)
        y.setAttribute("id", "newurl"+id)
+// new image source form
+    let rowElement6 = document.createElement('td')
+    let newimgForm = document.createElement("FORM")
+      newurlForm.setAttribute("name", "newimgForm")
+       z = document.createElement("INPUT")
+       z.setAttribute("type", "text")
+       z.setAttribute("value", `Include http:// or https://`)
+       z.setAttribute("id", "newimg"+id)
+// address button
     let addressButton = document.createElement("BUTTON")
     addressButton.innerText = `Owner`
     addressButton.class = "buyAdButton"
@@ -81,7 +92,6 @@ App = {
       window.open(adInfo[3], "_blank")
     })
     let rowElement3 = document.createElement('td')
-    let rowElement4 = document.createElement('td')
     let rowElement5 = document.createElement('td')
     let imageurl = document.createElement("img")
         imageurl.src = adInfo[5]
@@ -91,19 +101,22 @@ App = {
     buyAdButton.innerText = `Buy - ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
     buyAdButton.addEventListener('click', function() {
-      App.buyAd(id, adInfo[2], document.getElementById("newurl"+id).value)
+      App.buyAd(id, adInfo[2], document.getElementById("newurl"+id).value, document.getElementById("newimg"+id).value)
     })
     rowElement3.appendChild(buyAdButton)
     rowElement2.appendChild(visitButton)
     rowElement4.appendChild(newurlForm)
     rowElement4.appendChild(y)
     rowElement5.appendChild(imageurl)
+    rowElement6.appendChild(newimgForm)
+    rowElement6.appendChild(z)
     rowElement1.appendChild(addressButton)
     mainElement.appendChild(rowElement5)
     mainElement.appendChild(rowElement2)
     mainElement.appendChild(rowElement1)
     mainElement.appendChild(rowElement3)
     mainElement.appendChild(rowElement4)
+    mainElement.appendChild(rowElement6)
     document.querySelector('#ads-table').appendChild(mainElement)
   },
 

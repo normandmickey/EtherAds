@@ -57,7 +57,7 @@ contract EtherAds is ERC721Token, Ownable {
     tokenToImageUrlMap[adId] = imageurl;
   }
 
-  function buyAd(uint adId, string url) public payable onlyMintedTokens(adId) {
+  function buyAd(uint adId, string url, string img) public payable onlyMintedTokens(adId) {
     //require enough ether
     uint256 askingPrice = getAskingPrice(adId);
     require(msg.value >= askingPrice);
@@ -69,6 +69,7 @@ contract EtherAds is ERC721Token, Ownable {
     //update price
     tokenToPriceMap[adId] = askingPrice;
     tokenToUrlMap[adId] = (url);
+    tokenToImageUrlMap[adId] = (img);
 
     //TODO: take dev cut
 
