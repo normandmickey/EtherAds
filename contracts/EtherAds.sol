@@ -27,12 +27,14 @@ contract EtherAds is ERC721Token, Ownable {
   function EtherAds() public {
     mintObject(1, "CASINO", "http://www.etherads.co", "casino", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(2, "ICO", "http://www.etherads.co", "ico", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(3, "SEX", "http://www.etherads.co", "sex", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(3, "EXCHANGE", "http://www.etherads.co", "exchange", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(4, "BITCOIN", "http://www.etherads.co", "bitcoin", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(5, "ETHEREUM", "http://www.etherads.co", "ethereum", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(6, "AUCTION", "http://www.etherads.co", "auction", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(7, "WALLET", "http://www.etherads.co", "wallet", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
     mintObject(8, "CRYPTO", "http://www.etherads.co", "crypto", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(9, "GAMES", "http://www.etherads.co", "games", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(10, "TOKENS", "http://www.etherads.co", "tokens", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
   }
 
   function getName() public pure returns(string) {
