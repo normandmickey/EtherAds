@@ -61,13 +61,13 @@ App = {
     let mainElement = document.createElement('tr')
     mainElement.className = "ad-row"
     let rowElement1 = document.createElement('td')
-    let addressButton = document.createElement("BUTTON")
     let newurlForm = document.createElement("FORM")
       newurlForm.setAttribute("name", "newurlForm")
        y = document.createElement("INPUT")
        y.setAttribute("type", "text")
        y.setAttribute("value", "newurl"+id)
        y.setAttribute("id", "newurl"+id)
+    let addressButton = document.createElement("BUTTON")
     addressButton.innerText = `${adInfo[1]}`
     addressButton.class = "buyAdButton"
     addressButton.addEventListener('click', function redirect() {
@@ -85,8 +85,8 @@ App = {
     let rowElement5 = document.createElement('td')
     let imageurl = document.createElement("img")
         imageurl.src = adInfo[5]
-        imageurl.height = 450
-        imageurl.width = 450
+        imageurl.height = 200
+        imageurl.width = 200
     let buyAdButton = document.createElement("BUTTON")
     buyAdButton.innerText = `${adInfo[0]} - ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
