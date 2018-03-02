@@ -82,6 +82,11 @@ App = {
     })
     let rowElement3 = document.createElement('td')
     let rowElement4 = document.createElement('td')
+    let rowElement5 = document.createElement('td')
+    let imageurl = document.createElement("img")
+        imageurl.src = adInfo[5]
+        imageurl.height = 450
+        imageurl.width = 450
     let buyAdButton = document.createElement("BUTTON")
     buyAdButton.innerText = `${adInfo[0]} - ${web3.fromWei(adInfo[2], "ether")} ETH `
     buyAdButton.class = "buyAdButton"
@@ -92,11 +97,13 @@ App = {
     rowElement2.appendChild(visitButton)
     rowElement4.appendChild(newurlForm)
     rowElement4.appendChild(y)
+    rowElement5.appendChild(imageurl)
     rowElement1.appendChild(addressButton)
-    mainElement.appendChild(rowElement1)
+    mainElement.appendChild(rowElement5)
     mainElement.appendChild(rowElement2)
     mainElement.appendChild(rowElement3)
     mainElement.appendChild(rowElement4)
+    mainElement.appendChild(rowElement1)
     document.querySelector('#ads-table').appendChild(mainElement)
   },
 
