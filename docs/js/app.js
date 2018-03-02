@@ -65,13 +65,13 @@ App = {
       newurlForm.setAttribute("name", "newurlForm")
        y = document.createElement("INPUT")
        y.setAttribute("type", "text")
-       y.setAttribute("value", "http\:\/\/")
+       y.setAttribute("value", `Include http:// or https://`)
        y.setAttribute("id", "newurl"+id)
     let addressButton = document.createElement("BUTTON")
     addressButton.innerText = `Owner`
     addressButton.class = "buyAdButton"
     addressButton.addEventListener('click', function redirect() {
-      window.location = `https://rinkeby.etherscan.io/address/${adInfo[1]}`
+      window.open(`https://rinkeby.etherscan.io/address/${adInfo[1]}`, "_blank")
     })
     let rowElement2 = document.createElement('td')
     let visitButton = document.createElement("BUTTON")
