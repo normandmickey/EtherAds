@@ -84,6 +84,7 @@ App = {
     addressButton.addEventListener('click', function redirect() {
       window.open(`https://rinkeby.etherscan.io/address/${adInfo[1]}`, "_blank")
     })
+// link button
     let rowElement2 = document.createElement('td')
     let visitButton = document.createElement("BUTTON")
     visitButton.innerText = `${adInfo[0]}`
@@ -91,6 +92,7 @@ App = {
     visitButton.addEventListener('click', function() {
       window.open(adInfo[3], "_blank")
     })
+// image
     let rowElement3 = document.createElement('td')
     let rowElement5 = document.createElement('td')
     let imageurl = document.createElement("img")

@@ -6,7 +6,7 @@ import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 contract EtherAds is ERC721Token, Ownable {
   string constant public NAME = "EthAds";
   string constant public SYMBOL = "EAD";
-  uint256 constant public PRICE = 0.005 ether;
+  uint256 constant public PRICE = 0.0005 ether;
   uint256 public objectCount = 0;
 
   mapping(uint256 => uint256) tokenToPriceMap;
