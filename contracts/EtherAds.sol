@@ -133,6 +133,10 @@ contract EtherAds is ERC721Token, Ownable {
     return (name, owner, askingPrice, url, description, imageurl);
   }
 
+  function withdrawEther() external onlyOwner {
+    owner.transfer(this.balance);
+  }
+
   modifier onlyMintedTokens(uint256 adId) {
     require(tokenToPriceMap[adId] != 0);
     _;
