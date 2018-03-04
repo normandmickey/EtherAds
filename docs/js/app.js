@@ -116,9 +116,9 @@ App = {
     mainElement.appendChild(rowElement5)
     mainElement.appendChild(rowElement2)
     mainElement.appendChild(rowElement1)
-    mainElement.appendChild(rowElement3)
     mainElement.appendChild(rowElement4)
     mainElement.appendChild(rowElement6)
+    mainElement.appendChild(rowElement3)
     document.querySelector('#ads-table').appendChild(mainElement)
   },
 
