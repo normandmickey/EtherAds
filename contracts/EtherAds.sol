@@ -6,7 +6,6 @@ import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
 contract EtherAds is ERC721Token, Ownable {
   string constant public NAME = "EthAds";
   string constant public SYMBOL = "EAD";
-  address constant public DEV = 0xa867f9035A5e48E40bB10C82e599aA05217ab370;
   uint256 constant public PRICE = 0.0005 ether;
   uint256 public objectCount = 0;
 
@@ -15,7 +14,6 @@ contract EtherAds is ERC721Token, Ownable {
   mapping(uint256 => string) tokenToUrlMap;
   mapping(uint256 => string) tokenToDescriptionMap;
   mapping(uint256 => string) tokenToImageUrlMap;
-  mapping(uint256 => string) tokenToDevMap;
 
   Ad[] ads;
 
@@ -23,8 +21,7 @@ contract EtherAds is ERC721Token, Ownable {
     string name;
     string url;
     string description;
-    string imageurl;
-    string dev; 
+    string imageurl; 
   }
 
   function EtherAds() public {
@@ -48,10 +45,6 @@ contract EtherAds is ERC721Token, Ownable {
     return SYMBOL;
   }
 
-  function getDev() public pure returns(address) {
-    return DEV;
-  }
-
   function getObjectCount() public view returns (uint256) {
     return objectCount;
   }
@@ -73,7 +66,6 @@ contract EtherAds is ERC721Token, Ownable {
 
     //transfer ad ownership
     address previousOwner = ownerOf(adId);
-    address devAddress = getDev();
 
     clearApprovalAndTransfer(previousOwner, msg.sender, adId);
 
@@ -83,12 +75,10 @@ contract EtherAds is ERC721Token, Ownable {
     tokenToImageUrlMap[adId] = (img);
 
     //TODO: take dev cut
-    uint256 devcut = getDevCut(adId);
     uint256 pocut = getPoCut(adId);
 
     //send ether to previous owner
     previousOwner.transfer(pocut);
-//    devAddress.transfer(devcut);
   }
 
   function getDevCut(uint256 adId) public view onlyMintedTokens(adId) returns(uint256) {
@@ -100,7 +90,6 @@ contract EtherAds is ERC721Token, Ownable {
     uint256 askingPrice = tokenToPriceMap[adId];
     return askingPrice * 67 / 100;
   }
-
 
   function getCurrentPrice(uint256 adId) public view onlyMintedTokens(adId) returns(uint256) {
     return tokenToPriceMap[adId];
