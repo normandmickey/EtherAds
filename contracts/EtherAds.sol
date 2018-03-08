@@ -2,6 +2,7 @@ pragma solidity ^0.4.18;
 
 import 'zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol';
 import 'zeppelin-solidity/contracts/ownership/Ownable.sol';
+import './usingOraclize.sol';
 
 contract EtherAds is ERC721Token, Ownable {
   string constant public NAME = "EthAds";
@@ -12,7 +13,6 @@ contract EtherAds is ERC721Token, Ownable {
   mapping(uint256 => uint256) tokenToPriceMap;
   mapping(uint256 => string) tokenToNameMap;
   mapping(uint256 => string) tokenToUrlMap;
-  mapping(uint256 => string) tokenToDescriptionMap;
   mapping(uint256 => string) tokenToImageUrlMap;
 
   Ad[] ads;
@@ -20,21 +20,20 @@ contract EtherAds is ERC721Token, Ownable {
   struct Ad {
     string name;
     string url;
-    string description;
     string imageurl; 
   }
 
   function EtherAds() public {
-    mintObject(1, "CASINO", "http://www.etherads.co", "casino", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(2, "ICO", "http://www.etherads.co", "ico", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(3, "EXCHANGE", "http://www.etherads.co", "exchange", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(4, "BITCOIN", "http://www.etherads.co", "bitcoin", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(5, "ETHEREUM", "http://www.etherads.co", "ethereum", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(6, "AUCTION", "http://www.etherads.co", "auction", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(7, "WALLET", "http://www.etherads.co", "wallet", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(8, "CRYPTO", "http://www.etherads.co", "crypto", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(9, "GAMES", "http://www.etherads.co", "games", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-    mintObject(10, "TOKENS", "http://www.etherads.co", "tokens", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(1, "ETHEREUM", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(2, "ICO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(3, "EXCHANGE", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");//
+//    mintObject(4, "BITCOIN", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(5, "CASINO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(6, "AUCTION", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(7, "WALLET", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(8, "CRYPTO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(9, "GAMES", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+//    mintObject(10, "TOKENS", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
   }
 
   function getName() public pure returns(string) {
@@ -49,13 +48,12 @@ contract EtherAds is ERC721Token, Ownable {
     return objectCount;
   }
 
-  function mintObject(uint256 adId, string name, string url, string description, string imageurl) public payable onlyOwner() {
+  function mintObject(uint256 adId, string name, string url, string imageurl) public payable onlyOwner() {
     _mint(msg.sender, adId);
     objectCount++;
     tokenToNameMap[adId] = name;
     tokenToUrlMap[adId] = url;
     tokenToPriceMap[adId] = PRICE;
-    tokenToDescriptionMap[adId] = description;
     tokenToImageUrlMap[adId] = imageurl;
   }
 
@@ -97,29 +95,16 @@ contract EtherAds is ERC721Token, Ownable {
 
   function getAskingPrice(uint256 adId) public view onlyMintedTokens(adId) returns(uint256) {
     uint256 lastPrice = tokenToPriceMap[adId];
-//    if (lastPrice <= 0.04 ether) {
       return lastPrice * 2;
-//    }
-//    if (lastPrice <= 0.25 ether) {
-//      return lastPrice * 2 ;
-//    }
-//    if (lastPrice <= 0.50 ether) {
-//      return lastPrice * 2;
-//    }
-//    if (lastPrice > 0.50 ether) {
-//      return lastPrice * 2;
-//   }
-//    return lastPrice;
   }
 
-  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256, string, string, string) {
+  function getAd(uint256 adId) public view onlyMintedTokens(adId) returns(string, address, uint256, string, string) {
     string name = tokenToNameMap[adId];
     address owner = ownerOf(adId);
     uint256 askingPrice = getAskingPrice(adId);
     string url = tokenToUrlMap[adId];
-    string description = tokenToDescriptionMap[adId];
     string imageurl = tokenToImageUrlMap[adId];
-    return (name, owner, askingPrice, url, description, imageurl);
+    return (name, owner, askingPrice, url, imageurl);
   }
 
   function withdrawEther() external onlyOwner {
