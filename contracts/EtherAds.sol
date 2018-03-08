@@ -25,15 +25,15 @@ contract EtherAds is ERC721Token, Ownable {
 
   function EtherAds() public {
     mintObject(1, "ETHEREUM", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
-//    mintObject(2, "ICO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(3, "EXCHANGE", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");//
-//    mintObject(4, "BITCOIN", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(5, "CASINO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(6, "AUCTION", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(7, "WALLET", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(8, "CRYPTO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(9, "GAMES", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
-//    mintObject(10, "TOKENS", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(2, "ICO", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(3, "EXCHANGE", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");//
+    mintObject(4, "BITCOIN", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(5, "CASINO", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(6, "AUCTION", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(7, "WALLET", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(8, "CRYPTO", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(9, "GAMES", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
+    mintObject(10, "TOKENS", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDB6DGcGwRH");
   }
 
   function getName() public pure returns(string) {
