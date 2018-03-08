@@ -24,7 +24,7 @@ contract EtherAds is ERC721Token, Ownable {
   }
 
   function EtherAds() public {
-    mintObject(1, "ETHEREUM", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
+    mintObject(1, "ETHEREUM", "http://www.etherads.co", "https://gateway.ipfs.io/ipfs/QmXoaFB2tsXa4YWNERQsypnxuQU84Dz4sw1jDBGcGwRH");
 //    mintObject(2, "ICO", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
 //    mintObject(3, "EXCHANGE", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");//
 //    mintObject(4, "BITCOIN", "http://www.etherads.co", "https://www.ethereum.org/images/logos/ETHEREUM-ICON_Black_small.png");
